@@ -1,0 +1,39 @@
+.login-box {
+  margin: 10em auto;
+  width: 50%;
+  height: 50%;
+  padding: 10px;
+  /* display: flex; */
+  flex-direction: column;
+}
+
+.input-group {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+label {
+  margin-right: 1em;
+}
+
+.input-button {
+  background: linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+  background-color: #44c767;
+  border-radius: 9px;
+  border: 1px solid #18ab29;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 17px;
+  padding: 9px 20px;
+  text-decoration: none;
+}
+.input-button:hover {
+  background: linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
+  background-color: #5cbf2a;
+}
+.input-button:active {
+  position: relative;
+  top: 1px;
+}
