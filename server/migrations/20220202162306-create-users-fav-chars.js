@@ -2,10 +2,14 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('users_fav_chars', {
-      charId: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
+      charId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
       },
       userId: {

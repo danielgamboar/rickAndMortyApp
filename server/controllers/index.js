@@ -26,7 +26,6 @@ exports.loginUser = async (req, res) => {
 
 exports.getAllCharacters = async (req, res) => {
   let response = null;
-  console.log('@@@@@@@@@@@@ USER FROM HEADER: ', req.user);
 
   response = await characterController.getAllCharacters();
 
@@ -35,8 +34,6 @@ exports.getAllCharacters = async (req, res) => {
 
 exports.getCharacterById = async (req, res) => {
   let response = null;
-  console.log('request params: ', req.params);
-
   response = await characterController.getCharacterById(req.params.id);
 
   return res.status(response.status).send(response);
@@ -52,23 +49,7 @@ exports.getAllUsers = async (req, res) => {
 
 exports.postUserFavChar = async (req, res) => {
   let response = null;
-  if (!req.body.userId) {
-    return res.status(400).send({ error: 'No valid user ID was provided.' });
-  }
-  if (!req.body.char.id) {
-    return res
-      .status(400)
-      .send({ error: 'No valid character ID was provided.' });
-  }
-
-  response = await usersController.userFavChar(req.body.userId, req.body.char);
-
-  return res.status(response.status).send(response);
-};
-
-exports.deleteUserFavChar = async (req, res) => {
-  let response = null;
-  if (!req.body.userId) {
+  if (!req.user.id) {
     return res.status(400).send({ error: 'No valid user ID was provided.' });
   }
   if (!req.body.charId) {
@@ -77,10 +58,7 @@ exports.deleteUserFavChar = async (req, res) => {
       .send({ error: 'No valid character ID was provided.' });
   }
 
-  response = await usersController.userUnfavChar(
-    req.body.userId,
-    req.body.charId
-  );
+  response = await usersController.userFavChar(req.user.id, req.body.charId);
 
   return res.status(response.status).send(response);
 };

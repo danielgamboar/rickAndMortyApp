@@ -20,41 +20,29 @@ const getAllUsers = async () => {
   return data;
 };
 
-const userFavChar = async (userid, char) => {
-  return Users.findOne({
-    where: {
-      id: userid,
-    },
-  })
-    .then((user) => {
-      return UsersFavChar.create({
-        charId: char.id,
-        userId: user.id,
-      }).then((userFavChar) => {
-        return {
-          status: 201,
-          message: `Now you have a new favorite R&M character: ${char.name}`,
-        };
-      });
-    })
-    .catch((error) => {
-      return { status: 500, message: error.errors.message, error };
-    });
-};
-
-const userUnfavChar = async (userid, charid) => {
+const userFavChar = async (userid, charid) => {
   return UsersFavChar.findOne({
     where: {
-      charId: charid,
-      userId: userid,
+      userid,
+      charid,
     },
   })
     .then((userFavChar) => {
       if (!userFavChar) {
-        return {
-          status: 500,
-          message: "You don't have this character in his favorite list.",
-        };
+        return UsersFavChar.create({
+          charId: charid,
+          userId: userid,
+        })
+          .then((userFavChar) => {
+            return {
+              status: 201,
+              message: `Now you have a new favorite R&M character`,
+            };
+          })
+          .catch((error) => {
+            console.log('Error at user fav char: ', error);
+            return { status: 500, message: error, error };
+          });
       } else {
         return userFavChar
           .destroy()
@@ -65,6 +53,7 @@ const userUnfavChar = async (userid, charid) => {
             };
           })
           .catch((error) => {
+            console.log(error);
             return {
               status: 500,
               message:
@@ -74,12 +63,12 @@ const userUnfavChar = async (userid, charid) => {
       }
     })
     .catch((error) => {
-      return { status: 500, message: error.errors.message, error };
+      console.log('Error at user fav char: ', error);
+      return { status: 500, message: error, error };
     });
 };
 
 module.exports = {
   getAllUsers,
   userFavChar,
-  userUnfavChar,
 };
