@@ -4,9 +4,6 @@ require('dotenv').config();
 
 const Users = require('../models').Users;
 
-//We call Joi validators for our request
-const { registerValidator, loginValidator } = require('../helpers/validation');
-
 const registerUser = async (body) => {
   //Search for an existing user with the supplied email - to make sure same email is only used once
   const emailExists = await Users.findOne({ where: { email: body.email } });
@@ -50,7 +47,7 @@ const loginUser = async (body) => {
 
   //Check if pasword is correct using bcrpyt to compare to the stored hash. If they don't match, reject the login
   const validPassword = await bcrypt.compare(body.password, user.password);
-  if (!validPassword) return res.status(400).send('Invalid password');
+  if (!validPassword) return { status: 400, message: 'Invalid password' };
 
   //Create + Assign a JWT token with a 10 minute expiry
   const token = jwt.sign(
