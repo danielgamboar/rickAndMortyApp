@@ -1,9 +1,11 @@
 const axios = require('axios');
 
-const getAllCharacters = async () => {
+const getAllCharacters = async (page = 1) => {
   let data = null;
 
-  let response = await axios.get('https://rickandmortyapi.com/api/character');
+  let response = await axios.get(
+    `https://rickandmortyapi.com/api/character/?page=${page}`
+  );
   data = {
     status: response.status,
     data: response.data,

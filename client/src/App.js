@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 import Home from './components/Home/Home';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Header from './components/Header/Header';
+import SearchBar from './components/SearchBar/SearchBar';
 
-import { logout } from './actions/auth';
 import { clearMessage } from './actions/message';
+import { getAllChars, getUsersFavChars } from './actions/ramchar';
 
 import { history } from './helpers/history';
 
@@ -19,36 +20,18 @@ const App = () => {
 
   useEffect(() => {
     history.listen((location) => {
-      dispatch(clearMessage()); // clear message when changing location
+      dispatch(clearMessage());
     });
-  }, [dispatch]);
-
-  const logOut = () => {
-    dispatch(logout());
-  };
+    dispatch(getAllChars(1));
+    dispatch(getUsersFavChars(isLoggedIn));
+  }, [dispatch, isLoggedIn]);
 
   return (
     <Router history={history}>
       <div className="header">
-        <Header />
-        {isLoggedIn ? (
-          <div>
-            <a href="/login" className="nav-link" onClick={logOut}>
-              LogOut
-            </a>
-          </div>
-        ) : (
-          <div>
-            <Link to={'/login'} className="nav-link">
-              Login
-            </Link>
-            {window.location.pathname === '/register' ? null : (
-              <Link to={'/register'} className="nav-link">
-                Register
-              </Link>
-            )}
-          </div>
-        )}
+        <Header isLoggedIn={isLoggedIn} />
+        <SearchBar />
+
         <div>
           <Routes>
             <Route path="/" element={<Home />} />

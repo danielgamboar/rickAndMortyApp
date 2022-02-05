@@ -14,7 +14,7 @@ const authMiddleware = require('../helpers/authMiddleware');
 router.use('/auth', authRoutes);
 
 // router.use('/characters', authMiddleware, characterRoutes);
-router.get('/characters/', getAllCharacters);
+router.get('/characters/:page', getAllCharacters);
 router.get('/characters/:id', authMiddleware, getCharacterById);
 router.use('/user', authMiddleware, usersRoutes);
 

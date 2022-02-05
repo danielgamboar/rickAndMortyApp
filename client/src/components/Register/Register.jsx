@@ -139,8 +139,8 @@ const Register = (props) => {
             </button>
           </div>
           <div className={styles.link_box}>
-            <Link to="/register" className={styles.link}>
-              Go and register if you don't have an account.
+            <Link to="/login" className={styles.link}>
+              You are a member? Log in then.
             </Link>
           </div>
         </form>

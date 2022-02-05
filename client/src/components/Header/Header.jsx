@@ -1,13 +1,41 @@
 import React from 'react';
 import styles from './Header.module.css';
 import logo from './logo.png';
+import { logout } from '../../actions/auth';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-export default function Header() {
+export default function Header(props) {
+  const { isLoggedIn } = props;
+  const dispatch = useDispatch();
+
+  const logOut = () => {
+    dispatch(logout());
+  };
   return (
     <div className={styles.container}>
+      {isLoggedIn ? (
+        <div>
+          <a href="/login" className="nav-link" onClick={logOut}>
+            LogOut
+          </a>
+        </div>
+      ) : (
+        <div>
+          <Link to={'/login'} className="nav-link">
+            Login
+          </Link>
+          {window.location.pathname === '/register' ? null : (
+            <Link to={'/register'} className="nav-link">
+              Register
+            </Link>
+          )}
+        </div>
+      )}
       <div className={styles.logo_box}>
         <img src={logo} alt="logo" className={styles.image} />
       </div>
+
       {/* <form className={styles.search_box}>
         <input
           type="search"

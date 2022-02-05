@@ -27,7 +27,7 @@ exports.loginUser = async (req, res) => {
 exports.getAllCharacters = async (req, res) => {
   let response = null;
 
-  response = await characterController.getAllCharacters();
+  response = await characterController.getAllCharacters(req.params.page || 1);
 
   return res.status(response.status).send(response);
 };

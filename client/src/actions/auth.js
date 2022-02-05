@@ -12,13 +12,12 @@ import AuthService from '../services/auth';
 export const register = (fullName, email, password) => (dispatch) => {
   return AuthService.register(fullName, email, password).then(
     (response) => {
-      console.log('REGISTER: ', response);
       dispatch({ type: REGISTER_SUCCESS });
       dispatch({ type: SET_MESSAGE, payload: response.message });
       return Promise.resolve();
     },
     (error) => {
-      console.log('aciton register error: ', error);
+      console.error('aciton register error: ', error);
       const message = error.error || error.message;
 
       dispatch({ type: REGISTER_FAIL });

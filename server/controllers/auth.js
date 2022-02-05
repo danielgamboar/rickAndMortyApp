@@ -54,9 +54,9 @@ const loginUser = async (body) => {
     {
       id: user.id,
       name: user.fullName,
-      exp: Math.floor(Date.now() / 1000) + 60 * 10,
     },
-    process.env.TOKEN_SECRET
+    process.env.TOKEN_SECRET,
+    { expiresIn: '4h' }
   );
 
   //Return the token in a header called 'auth-token'. Add auth-token to any future requests to protected routes

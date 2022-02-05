@@ -1,13 +1,12 @@
+/* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios';
 import authHeader from './auth-header';
-// import config from 'dotenv';
-// config.config();
 
-const API_BASE_URL = process.env.API_BASE_URL;
+const API_BASE_URL = 'http://localhost:4001/api';
 
-const getAllChars = () => {
-  axios
-    .get(API_BASE_URL + '/characters', { headers: authHeader() })
+const getAllChars = (page) => {
+  return axios
+    .get(API_BASE_URL + `/characters/${page}`, { headers: authHeader() })
     .then((response) => {
       if (response.data.status === 200) {
         return response.data.data;
@@ -16,7 +15,7 @@ const getAllChars = () => {
 };
 
 const getCharById = (id) => {
-  axios
+  return axios
     .get(API_BASE_URL + `/characters/${id}`, { headers: authHeader() })
     .then((response) => {
       if (response.data.status === 200) {
@@ -25,16 +24,33 @@ const getCharById = (id) => {
     });
 };
 
-const favOrUnfavChar = (userId, charId) => {
-  axios
+const favOrUnfavChar = (charId) => {
+  return axios
     .post(
-      API_BASE_URL + `/users/favchar`,
-      { headers: authHeader() },
-      { userId, charId }
+      API_BASE_URL + `/user/favchar`,
+      { charId: charId },
+      { headers: authHeader() }
     )
     .then((response) => {
+      console.log('fav unfav reponse: ', response);
+      if (response.data.status === 201 || response.data.status === 200) {
+        return response.data;
+      }
+    })
+    .catch((error) => {
+      console.log('user fav char eror', error);
+      return {};
+    });
+};
+
+const getUsersFavChars = () => {
+  return axios
+    .get(API_BASE_URL + `/user/favs`, { headers: authHeader() })
+    .then((response) => {
+      let charIDs = [];
       if (response.data.status === 200) {
-        return response.data.data;
+        charIDs = response.data.data.map((char) => char.charId);
+        return charIDs;
       }
     });
 };
@@ -43,4 +59,5 @@ export default {
   favOrUnfavChar,
   getCharById,
   getAllChars,
+  getUsersFavChars,
 };

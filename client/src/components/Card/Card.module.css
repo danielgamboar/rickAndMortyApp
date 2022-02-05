@@ -1,15 +1,23 @@
-.card_wrapper {
-  display: flex;
-  justify-content: center;
-}
-
 .card {
   height: auto;
   width: 30em;
   display: flex;
   border-radius: 10px;
   margin: 1em;
+  flex: 0 0 47.33333%;
 }
+
+@media screen and (min-width: 1000px) {
+  .card {
+    flex: 0 0 43.33333%;
+  }
+}
+@media screen and (min-width: 1500px) {
+  .card {
+    flex: 0 0 24.33333%;
+  }
+}
+
 .card_img {
   display: flex;
 }
@@ -77,6 +85,7 @@
   flex-grow: 0;
   text-align: center;
   margin-left: -1em;
+  cursor: pointer;
 }
 .btn_liked {
   background-color: #dd7979;
@@ -89,4 +98,5 @@
   flex-grow: 0;
   text-align: center;
   margin-left: -1em;
+  cursor: pointer;
 }

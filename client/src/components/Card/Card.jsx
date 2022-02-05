@@ -1,40 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './Card.module.css';
-const imageUrl = 'https://rickandmortyapi.com/api/character/avatar/401.jpeg';
+import { favOrUnfavChar, getUsersFavChars } from '../../actions/ramchar';
 
 export default function Card(props) {
-  let liked = true;
+  const { char, liked } = props;
+  const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
+  const handleFavChar = (e) => {
+    e.preventDefault();
+    dispatch(favOrUnfavChar(char.id));
+    // dispatch(getUsersFavChars(isLoggedIn));
+
+    // console.log(char.id);
+  };
+
   return (
-    <div className={styles.card_wrapper}>
+    <>
       <div className={styles.card}>
         <div className={styles.card_img}>
-          <img src={imageUrl} alt="character" className={styles.char_image} />
+          <img src={char.image} alt="character" className={styles.char_image} />
         </div>
         <div className={styles.card_body}>
           <div className={styles.card_header}>
-            <h3 className={styles.title}>Rick Sanchez</h3>
+            <h3 className={styles.title}>{char.name}</h3>
           </div>
           <div className={styles.card_data}>
             <div className={styles.data_box}>
-              <p className={styles.text}>Alive: </p>
-              <p className={styles.data}>yes</p>
+              <p className={styles.text}>Status: </p>
+              <p className={styles.data}>{char.status}</p>
             </div>
             <div className={styles.data_box}>
               <p className={styles.text}>Origen: </p>
-              <p className={styles.data}>Earth</p>
+              <p className={styles.data}>{char.origin.name}</p>
             </div>
             <div className={styles.data_box}>
-              <p className={styles.text}>Especie: </p>
-              <p className={styles.data}>Humano</p>
+              <p className={styles.text}>Specie: </p>
+              <p className={styles.data}>{char.species}</p>
             </div>
           </div>
           <div className={styles.button_box}>
-            <button className={liked ? styles.btn_liked : styles.btn_like}>
+            <button
+              className={liked ? styles.btn_liked : styles.btn_like}
+              onClick={handleFavChar}
+            >
               {liked ? 'Loving' : 'Like'}
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

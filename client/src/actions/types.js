@@ -6,3 +6,15 @@ export const LOGOUT = 'LOGOUT';
 
 export const SET_MESSAGE = 'SET_MESSAGE';
 export const CLEAR_MESSAGE = 'CLEAR_MESSAGE';
+
+export const LOAD_ALL_CHARS = 'LOAD_ALL_CHARS';
+export const LOAD_ALL_CHARS_FAIL = 'LOAD_ALL_CHARS_FAIL';
+export const LOAD_CHAR = 'LOAD_CHAR';
+export const LOAD_CHAR_FAIL = 'LOAD_CHAR_FAIL';
+export const LOAD_FAV_CHARS = 'LOAD_FAV_CHARS';
+export const LOAD_FAV_CHARS_FAIL = 'LOAD_FAV_CHARS_FAIL';
+
+export const LOAD_CURRENT_USER = 'LOAD_CURRENT_USER';
+export const LOAD_CURRENT_USER_FAIL = 'LOAD_CURRENT_USER_FAIL';
+export const USER_FAV_CHAR = 'USER_FAV_CHAR';
+export const USER_FAV_CHAR_FAIL = 'USER_FAV_CHAR_FAIL';
