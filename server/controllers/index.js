@@ -39,10 +39,18 @@ exports.getCharacterById = async (req, res) => {
   return res.status(response.status).send(response);
 };
 
-exports.getAllUsers = async (req, res) => {
+exports.getAllUsersFavChars = async (req, res) => {
   let response = null;
 
-  response = await usersController.getAllUsers();
+  response = await usersController.getAllUsersFavChars(req.user.id);
+
+  return res.status(response.status).send(response);
+};
+
+exports.getCurrentUser = async (req, res) => {
+  let response = null;
+
+  response = await usersController.getCurrentUser(req.user.id);
 
   return res.status(response.status).send(response);
 };

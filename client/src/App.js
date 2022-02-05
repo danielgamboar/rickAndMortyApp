@@ -5,6 +5,8 @@ import './App.css';
 
 import Home from './components/Home/Home';
 import Login from './components/Login/Login';
+import Register from './components/Register/Register';
+import Header from './components/Header/Header';
 
 import { logout } from './actions/auth';
 import { clearMessage } from './actions/message';
@@ -27,7 +29,8 @@ const App = () => {
 
   return (
     <Router history={history}>
-      <div>
+      <div className="header">
+        <Header />
         {isLoggedIn ? (
           <div>
             <a href="/login" className="nav-link" onClick={logOut}>
@@ -39,21 +42,22 @@ const App = () => {
             <Link to={'/login'} className="nav-link">
               Login
             </Link>
+            {window.location.pathname === '/register' ? null : (
+              <Link to={'/register'} className="nav-link">
+                Register
+              </Link>
+            )}
           </div>
         )}
         <div>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </div>
       </div>
     </Router>
-
-    // <div className="App">
-    //   {/* <Home /> */}
-    //   <Login />
-    // </div>
   );
 };
 

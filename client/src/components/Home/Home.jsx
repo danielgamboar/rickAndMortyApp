@@ -1,9 +1,11 @@
 import React from 'react';
+import Header from '../Header/Header';
+import Card from '../Card/Card';
 
 export default function Home() {
   return (
-    <div>
-      <h1>React App</h1>
-    </div>
+    <>
+      <Card />
+    </>
   );
 }

@@ -1,0 +1,84 @@
+.login_box {
+  margin: 2em auto;
+  height: 25%;
+  padding: 10px;
+  flex-direction: column;
+}
+.card_header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.input_group,
+.button_box {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+  flex-direction: column;
+}
+.input_label {
+  font-weight: ital;
+  font-style: italic;
+  color: #02b1c8;
+}
+.input_field {
+  font-weight: bold;
+  color: black;
+}
+.center_content {
+  margin: 0 auto;
+  width: 75%;
+}
+
+.error_message {
+  text-align: center;
+  color: rgb(255, 61, 61);
+  margin-top: 3px;
+  margin-bottom: 0;
+}
+@media screen and (min-width: 1000px) {
+  .login_box {
+    width: 55%;
+  }
+}
+@media screen and (min-width: 1500px) {
+  .login_box {
+    width: 25%;
+  }
+}
+
+.title {
+  color: white;
+  margin: 0.5em;
+}
+.app_name {
+  color: #18ab29;
+}
+.link_box {
+  display: flex;
+  justify-content: center;
+}
+.link {
+  color: white;
+}
+
+.input_button {
+  background: linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+  background-color: #44c767;
+  border-radius: 9px;
+  border: 1px solid #18ab29;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 17px;
+  padding: 9px 20px;
+  text-decoration: none;
+}
+.input_button:hover {
+  background: linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
+  background-color: #5cbf2a;
+}
+.input_button:active {
+  position: relative;
+  top: 1px;
+}

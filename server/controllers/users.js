@@ -1,10 +1,14 @@
-const Users = require('../models').Users;
 const UsersFavChar = require('../models').users_fav_chars;
+const Users = require('../models').Users;
 
-const getAllUsers = async () => {
+const getAllUsersFavChars = async (userid) => {
   let data = null;
 
-  let response = await Users.findAll({ include: [{ model: UsersFavChar }] });
+  let response = await UsersFavChar.findAll({
+    where: {
+      userId: userid,
+    },
+  });
 
   if (response.lenght != 0) {
     data = {
@@ -68,7 +72,31 @@ const userFavChar = async (userid, charid) => {
     });
 };
 
+const getCurrentUser = async (userid) => {
+  let data = null;
+  let response = await Users.findOne({
+    where: {
+      id: userid,
+    },
+    attributes: ['id', 'fullName', 'email'],
+  });
+
+  if (response.lenght != 0) {
+    data = {
+      status: 200,
+      data: response,
+    };
+  } else {
+    data = {
+      status: 404,
+      data: response,
+    };
+  }
+  return data;
+};
+
 module.exports = {
-  getAllUsers,
+  getAllUsersFavChars,
   userFavChar,
+  getCurrentUser,
 };

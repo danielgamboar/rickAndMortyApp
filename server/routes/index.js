@@ -16,6 +16,6 @@ router.use('/auth', authRoutes);
 // router.use('/characters', authMiddleware, characterRoutes);
 router.get('/characters/', getAllCharacters);
 router.get('/characters/:id', authMiddleware, getCharacterById);
-router.use('/users', authMiddleware, usersRoutes);
+router.use('/user', authMiddleware, usersRoutes);
 
 module.exports = router;
