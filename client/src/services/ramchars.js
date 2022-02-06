@@ -16,11 +16,16 @@ const getAllChars = (page) => {
 
 const getCharById = (id) => {
   return axios
-    .get(API_BASE_URL + `/characters/${id}`, { headers: authHeader() })
+    .get(API_BASE_URL + `/char/${id}`, { headers: authHeader() })
     .then((response) => {
       if (response.data.status === 200) {
+        console.log('CHARACTER: ', response.data.data);
         return response.data.data;
       }
+    })
+    .catch((error) => {
+      console.log(error);
+      return error;
     });
 };
 
@@ -32,7 +37,6 @@ const favOrUnfavChar = (charId) => {
       { headers: authHeader() }
     )
     .then((response) => {
-      console.log('fav unfav reponse: ', response);
       if (response.data.status === 201 || response.data.status === 200) {
         return response.data;
       }

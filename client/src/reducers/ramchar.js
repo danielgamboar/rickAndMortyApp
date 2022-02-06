@@ -6,17 +6,18 @@ import {
   LOAD_FAV_CHARS_FAIL,
   USER_FAV_CHAR,
   USER_FAV_CHAR_FAIL,
+  INCREMENT_PAGE,
+  DECREMENT_PAGE,
 } from '../actions/types';
 
 const initialState = {
   allChars: [],
   userFavChars: [],
+  page: 1,
 };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
-
-  console.log('reducer action', action);
 
   switch (type) {
     case LOAD_ALL_CHARS:
@@ -46,6 +47,16 @@ export default function (state = initialState, action) {
     case USER_FAV_CHAR_FAIL:
       return {
         ...state,
+      };
+    case INCREMENT_PAGE:
+      return {
+        ...state,
+        page: payload,
+      };
+    case DECREMENT_PAGE:
+      return {
+        ...state,
+        page: payload,
       };
     default:
       return state;

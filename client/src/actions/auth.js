@@ -28,10 +28,8 @@ export const register = (fullName, email, password) => (dispatch) => {
 };
 
 export const login = (email, password) => (dispatch) => {
-  console.log('ESTAMOS EN EL ACTION');
   return AuthService.login(email, password).then(
     (response) => {
-      console.log('ACTION LOGIN RESPONSE: ', response);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: { token: response.auth_token },

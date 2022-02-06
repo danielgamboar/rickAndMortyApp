@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const authMiddleware = (req, res, next) => {
   //Pull the token value from the header on any requests that come in. If the token isn't present, reject access to the route
   const token = req.header('auth-token');
-  console.log('TOKEN: ', token);
   if (!token) res.status(401).send({ message: 'Access Denied' });
 
   //Use jwt.verify() to check if the token is valid. jwt.verify() returns the content of the JWT, which we store in user

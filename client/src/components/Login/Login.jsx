@@ -5,6 +5,7 @@ import { Navigate, Link } from 'react-router-dom';
 import styles from './Login.module.css';
 import { login } from '../../actions/auth';
 import { useForm, isRequired } from '../../helpers/formHook';
+import { setLoading } from '../../actions/loading';
 
 const ErrorMessage = (props) => {
   return (
@@ -34,10 +35,11 @@ const Login = (props) => {
     validations
   );
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.loading);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('SUBMITTING');
+    dispatch(setLoading(true));
     dispatch(login(values.email, values.password))
       .then(() => {
         return <Navigate to="/" />;
@@ -46,6 +48,7 @@ const Login = (props) => {
         console.error('error login: ', error);
         console.log('HUBO UN ERROR en el login');
       });
+    dispatch(setLoading(false));
   };
 
   if (isLoggedIn) {
@@ -100,7 +103,10 @@ const Login = (props) => {
             )}
           </div>
           <div className={styles.button_box}>
-            <button className={styles.input_button} disabled={!isValid}>
+            <button
+              className={styles.input_button}
+              disabled={loading || !isValid}
+            >
               Login
             </button>
           </div>

@@ -6,6 +6,18 @@
   width: 65%;
   margin: 0 auto;
 }
+.nav_bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.nav_link {
+  color: #53c343;
+  text-decoration: none;
+  margin: 1em;
+  font-size: large;
+  font-weight: bold;
+}
 .search_box {
   display: flex;
   border-radius: 4px;

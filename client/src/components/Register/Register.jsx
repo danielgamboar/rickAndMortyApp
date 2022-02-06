@@ -5,6 +5,7 @@ import { Navigate, Link } from 'react-router-dom';
 import styles from './Register.module.css';
 import { register } from '../../actions/auth';
 import { useForm, isSame, isRequired } from '../../helpers/formHook';
+import { setLoading } from '../../actions/loading';
 
 const Register = (props) => {
   const initialState = {
@@ -34,9 +35,12 @@ const Register = (props) => {
 
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
+  const { loading } = useSelector((state) => state.loading);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(setLoading(true));
+
     dispatch(register(values.fullName, values.email, values.password))
       .then(() => {
         return <Navigate to="/login" />;
@@ -45,6 +49,7 @@ const Register = (props) => {
         console.error('error register: ', error);
         console.log('there was an error register');
       });
+    dispatch(setLoading(false));
   };
 
   if (isLoggedIn) {
@@ -134,7 +139,10 @@ const Register = (props) => {
             )}
           </div>
           <div className={styles.button_box}>
-            <button className={styles.input_button} disabled={!isValid}>
+            <button
+              className={styles.input_button}
+              disabled={loading || !isValid}
+            >
               Register
             </button>
           </div>

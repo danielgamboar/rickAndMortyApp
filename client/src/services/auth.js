@@ -11,7 +11,6 @@ const login = (email, password) => {
       password,
     })
     .then((response) => {
-      console.log('login service reponse: ', response.data);
       if (response.data.status === 200) {
         localStorage.setItem('auth-token', response.data.auth_token);
       }
