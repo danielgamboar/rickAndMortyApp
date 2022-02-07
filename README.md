@@ -33,7 +33,7 @@ git clone https://github.com/danielgamboar/rickAndMortyApp.git
 cd rickAndMortyApp
 cd server -> Here change the .env.example file name to .env
 cd .. -> to go back to the root of the project
-npm run install
+npm install
 npm run setup
 npm run start
 ```
