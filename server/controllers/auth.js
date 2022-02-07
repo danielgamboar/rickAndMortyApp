@@ -43,7 +43,11 @@ const registerUser = async (body) => {
 const loginUser = async (body) => {
   //Check if the email address exists in database. If not, reject the login
   const user = await Users.findOne({ where: { email: body.email } });
-  if (!user) return { status: 400, message: 'Email is not correct' };
+  if (!user)
+    return {
+      status: 400,
+      message: 'Email is not correct or unregistered in our database',
+    };
 
   //Check if pasword is correct using bcrpyt to compare to the stored hash. If they don't match, reject the login
   const validPassword = await bcrypt.compare(body.password, user.password);

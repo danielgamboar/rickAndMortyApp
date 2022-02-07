@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import { useSelector, useDispatch } from 'react-redux';
-import { incrementPage, decrementPage } from '../../actions/ramchar';
+import {
+  incrementPage,
+  decrementPage,
+  getAllChars,
+  getUsersFavChars,
+} from '../../actions/ramchar';
 import styles from './Home.module.css';
 import Loading from '../Loading/Loading';
+import { setLoading } from '../../actions/loading';
 
 export default function Home() {
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.loading);
-
   const { allChars, userFavChars, page } = useSelector((state) => state.ram);
 
   const [query, setQuery] = useState('');
   const [searchParam] = useState(['name', 'status', 'species']);
+
+  useEffect(() => {
+    dispatch(setLoading(true));
+    dispatch(getAllChars(page));
+    dispatch(getUsersFavChars());
+    dispatch(setLoading(false));
+  }, [dispatch, page, loading]);
 
   function search() {
     return allChars.filter((char) => {
@@ -25,11 +37,11 @@ export default function Home() {
   }
   const handleIncrement = (e) => {
     e.preventDefault();
-    dispath(incrementPage(page));
+    dispatch(incrementPage(page));
   };
   const handleDecrement = (e) => {
     e.preventDefault();
-    dispath(decrementPage(page));
+    dispatch(decrementPage(page));
   };
   return (
     <>

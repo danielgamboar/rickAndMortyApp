@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Link } from 'react-router-dom';
 
@@ -6,6 +6,7 @@ import styles from './Login.module.css';
 import { login } from '../../actions/auth';
 import { useForm, isRequired } from '../../helpers/formHook';
 import { setLoading } from '../../actions/loading';
+import Notification from '../Notification/Notification';
 
 const ErrorMessage = (props) => {
   return (
@@ -36,20 +37,24 @@ const Login = (props) => {
   );
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { loading } = useSelector((state) => state.loading);
+  const { message, error } = useSelector((state) => state.message);
+
+  const [clear, setClear] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setLoading(true));
-    dispatch(login(values.email, values.password))
-      .then(() => {
-        return <Navigate to="/" />;
-      })
-      .catch((error) => {
-        console.error('error login: ', error);
-        console.log('HUBO UN ERROR en el login');
-      });
+    dispatch(login(values.email, values.password)).then(() => {
+      return <Navigate to="/" />;
+    });
     dispatch(setLoading(false));
   };
+
+  if (error) {
+    setTimeout(() => {
+      setClear(true);
+    }, 3500);
+  }
 
   if (isLoggedIn) {
     return <Navigate to="/" />;
@@ -67,6 +72,9 @@ const Login = (props) => {
         </h3>
       </div>
       <div className={styles.card_body}>
+        {error && !clear ? (
+          <Notification message={message} error={error} />
+        ) : null}
         <form onSubmit={handleSubmit}>
           <div className={styles.input_group}>
             <label className={styles.input_label} htmlFor="email">

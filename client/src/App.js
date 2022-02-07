@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
@@ -11,28 +11,28 @@ import NotFound from './components/NotFound/NotFound';
 import CharDetails from './components/CharDetails/CharDetails';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
-import { clearMessage } from './actions/message';
-import { getAllChars, getUsersFavChars } from './actions/ramchar';
-import { setLoading } from './actions/loading';
+import { clearMessage, clearMessageError } from './actions/message';
 
 import { history } from './helpers/history';
 import Footer from './components/Footer/Footer';
+import Notification from './components/Notification/Notification';
 
 const App = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
-  const { loading } = useSelector((state) => state.loading);
-  const { page } = useSelector((state) => state.ram);
+  const { message, error } = useSelector((state) => state.message);
+  const [clear, setClear] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     history.listen((location) => {
       dispatch(clearMessage());
     });
-    dispatch(setLoading(true));
-    dispatch(getAllChars(page));
-    dispatch(getUsersFavChars(isLoggedIn));
-    dispatch(setLoading(false));
-  }, [dispatch, isLoggedIn, page, loading]);
+    // const timer = setTimeout(() => {
+    //   // dispatch(clearMessageError());
+    //   setClear(!clear);
+    // }, 10000);
+    // return () => clearTimeout(timer);
+  }, [dispatch]);
 
   return (
     <Router history={history}>
@@ -49,6 +49,9 @@ const App = () => {
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      {/* {message ? (
+        <Notification message={message} error={error} clear={clear} />
+      ) : null} */}
 
       <Footer />
     </Router>

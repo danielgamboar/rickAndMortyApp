@@ -21,7 +21,10 @@ exports.loginUser = async (req, res) => {
 
   response = await authController.loginUser(req.body);
 
-  return res.header('auth-token', response.auth_token).send(response);
+  return res
+    .header('auth-token', response.auth_token)
+    .status(response.status)
+    .send(response);
 };
 
 exports.getAllCharacters = async (req, res) => {

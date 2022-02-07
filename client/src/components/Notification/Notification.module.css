@@ -1,0 +1,20 @@
+.notification,
+.notification_error {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #02b1c8;
+  text-align: center;
+  margin-bottom: 0px;
+  border-radius: 5px;
+}
+.notification_error {
+  background-color: rgba(255, 61, 61, 0.7);
+}
+.notification_text {
+  font-size: large;
+  font-weight: bold;
+  font-style: italic;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}

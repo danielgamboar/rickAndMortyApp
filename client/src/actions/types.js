@@ -6,6 +6,7 @@ export const LOGOUT = 'LOGOUT';
 
 export const SET_MESSAGE = 'SET_MESSAGE';
 export const CLEAR_MESSAGE = 'CLEAR_MESSAGE';
+export const CLEAR_MESSAGE_AND_ERROR = 'CLEAR_MESSAGE_AND_ERROR';
 
 export const LOAD_ALL_CHARS = 'LOAD_ALL_CHARS';
 export const LOAD_ALL_CHARS_FAIL = 'LOAD_ALL_CHARS_FAIL';

@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Link } from 'react-router-dom';
 
 import styles from './Register.module.css';
+import Notification from '../Notification/Notification';
+
 import { register } from '../../actions/auth';
 import { useForm, isSame, isRequired } from '../../helpers/formHook';
 import { setLoading } from '../../actions/loading';
@@ -34,21 +36,19 @@ const Register = (props) => {
   );
 
   const { isLoggedIn } = useSelector((state) => state.auth);
-  const { message } = useSelector((state) => state.message);
+  const { message, error } = useSelector((state) => state.message);
   const { loading } = useSelector((state) => state.loading);
+  const [clear, setClear] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setLoading(true));
 
-    dispatch(register(values.fullName, values.email, values.password))
-      .then(() => {
+    dispatch(register(values.fullName, values.email, values.password)).then(
+      () => {
         return <Navigate to="/login" />;
-      })
-      .catch((error) => {
-        console.error('error register: ', error);
-        console.log('there was an error register');
-      });
+      }
+    );
     dispatch(setLoading(false));
   };
 
@@ -60,6 +60,12 @@ const Register = (props) => {
     return <Navigate to="/login" />;
   }
 
+  if (error) {
+    setTimeout(() => {
+      setClear(true);
+    }, 3500);
+  }
+
   return (
     <div className={styles.register_box}>
       <div className={styles.card_header}>
@@ -69,6 +75,9 @@ const Register = (props) => {
         <h3 className={styles.title}>Register here!</h3>
       </div>
       <div className={styles.card_body}>
+        {error && !clear ? (
+          <Notification message={message} error={error} />
+        ) : null}
         <form onSubmit={handleSubmit}>
           <div className={styles.input_group}>
             <label htmlFor="fullName" className={styles.label_style}>

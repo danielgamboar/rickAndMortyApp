@@ -12,16 +12,30 @@ import AuthService from '../services/auth';
 export const register = (fullName, email, password) => (dispatch) => {
   return AuthService.register(fullName, email, password).then(
     (response) => {
-      dispatch({ type: REGISTER_SUCCESS });
-      dispatch({ type: SET_MESSAGE, payload: response.message });
+      if (response !== 200) {
+        dispatch({ type: REGISTER_FAIL });
+        dispatch({
+          type: SET_MESSAGE,
+          payload: { message: response.message, error: true },
+        });
+      } else {
+        dispatch({ type: REGISTER_SUCCESS });
+        dispatch({
+          type: SET_MESSAGE,
+          payload: { message: response.message, error: false },
+        });
+      }
       return Promise.resolve();
     },
     (error) => {
-      console.error('aciton register error: ', error);
-      const message = error.error || error.message;
-
       dispatch({ type: REGISTER_FAIL });
-      dispatch({ type: SET_MESSAGE, payload: message });
+      dispatch({
+        type: SET_MESSAGE,
+        payload: {
+          message: 'Something went wrong registering your data.',
+          error: true,
+        },
+      });
       return Promise.reject();
     }
   );
@@ -30,19 +44,35 @@ export const register = (fullName, email, password) => (dispatch) => {
 export const login = (email, password) => (dispatch) => {
   return AuthService.login(email, password).then(
     (response) => {
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: { token: response.auth_token },
-      });
-      dispatch({ type: SET_MESSAGE, payload: response.message });
+      console.log('LOGIN RESPONSE: ', response);
+      if (response.status !== 200) {
+        console.log('LOGIN FAIL');
+        dispatch({ type: LOGIN_FAIL });
+        dispatch({
+          type: SET_MESSAGE,
+          payload: { message: response.message, error: true },
+        });
+      } else {
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: { token: response.auth_token },
+        });
+        dispatch({
+          type: SET_MESSAGE,
+          payload: { message: response.message, error: false },
+        });
+      }
       return Promise.resolve();
     },
     (error) => {
-      console.log('action login error: ', error);
-      const message = error.error || error.message;
-
       dispatch({ type: LOGIN_FAIL });
-      dispatch({ type: SET_MESSAGE, payload: message });
+      dispatch({
+        type: SET_MESSAGE,
+        payload: {
+          message: 'Something is wrong with your login credentials.',
+          error: true,
+        },
+      });
       return Promise.reject();
     }
   );
@@ -51,4 +81,8 @@ export const login = (email, password) => (dispatch) => {
 export const logout = () => (dispatch) => {
   AuthService.logout();
   dispatch({ type: LOGOUT });
+  dispatch({
+    type: SET_MESSAGE,
+    payload: { message: 'See you soon!', error: false },
+  });
 };
