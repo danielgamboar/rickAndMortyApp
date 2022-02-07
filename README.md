@@ -57,7 +57,7 @@ npm run start
 | /api/auth/register    | POST   | With this route we can register new users. We need to provide a full name [fullName], email [email], and password [password]           |
 | /api/auth/login       | POST   | This handles the login and authentication process. We need to add to the request payload the email [email] and the password [password] |
 
-## API routes
+## Frontend routes
 
 | Route     | Description                                                                     |
 | --------- | ------------------------------------------------------------------------------- |
