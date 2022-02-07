@@ -7,7 +7,7 @@
     "server-setup": "cd server && npm install && npm run setup",
     "client": "cd client && npm start",
     "client-setup": "cd client && npm install",
-    "setup": "concurrently \"npm run server-setup\" \"npm run client-setup",
+    "setup": "npm run server-setup && npm run client-setup",
     "start": "concurrently \"npm run server\" \"npm run client"
   },
   "repository": {
