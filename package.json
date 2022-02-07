@@ -1,0 +1,26 @@
+{
+  "name": "rickandmortyapp",
+  "version": "1.0.0",
+  "description": "This is a full stack app with node, react, sqlite, sequelize, JWT authentication and more",
+  "scripts": {
+    "server": "cd server && npm run start",
+    "server-setup": "cd server && npm install && npm run setup",
+    "client": "cd client && npm start",
+    "client-setup": "cd client && npm install",
+    "setup": "concurrently \"npm run server-setup\"\"npm run client-setup",
+    "start": "concurrently \"npm run server\" \"npm run client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielgamboar/rickAndMortyApp.git"
+  },
+  "author": "Daniel Gamboa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielgamboar/rickAndMortyApp/issues"
+  },
+  "homepage": "https://github.com/danielgamboar/rickAndMortyApp#readme",
+  "dependencies": {
+    "concurrently": "^7.0.0"
+  }
+}
